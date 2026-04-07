@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type= "text/css"href="dimo.css"?>
+<monXML>
+    <Message>MOn premier document XML</Message>
+    <Nom>Mon Nom est xxx</Nom>
+</monXML>

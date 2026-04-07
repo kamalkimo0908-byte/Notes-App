@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml:stylesheet type="text/xsl" herf="simple.xsl"?>
+<racine>
+<enfant>
+    <lien>
+       garcon
+    </lien>
+    <nom>
+ loic
+    </nom>
+    <date>
+07/11/83
+    </date>
+    <data>
+le petit qui me depasse d'une tete
+    </data>
+</enfant>
+<enfant>
+    <lien>
+fille
+    </lien>
+    <nom>
+marine
+    </nom>
+    <date>
+20/12/85
+    </date>
+    <data>
+   le petite fille cherie a son papa     
+    </data>
+</enfant>
+</racine>

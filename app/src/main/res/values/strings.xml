@@ -9,4 +9,7 @@
     <string name="regPass">Password</string>
     <string name="regCPass">Confirm Password</string>
     <string name="linkLogIn">Already have an account? Login</string>
+    <string name="loginpg"> Welcome Back</string>
+    <string name="loginBtn"> Login</string>
+    <string name="linkrgs"> Create account</string>
 </resources>

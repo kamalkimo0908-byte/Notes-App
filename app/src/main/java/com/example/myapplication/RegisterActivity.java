@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class RegisterActivity extends AppCompatActivity {
     TextInputEditText name ,email, password,confirmPassword;
@@ -31,44 +32,55 @@ public class RegisterActivity extends AppCompatActivity {
     //Create Account
 
     private void createAccount(){
-        String userName =String.valueOf(name.getText()).trim();
-        String userEmail=String.valueOf(email.getText()).trim();
-        String userPassword =String.valueOf(password.getText()).trim();
-        String userConfirm =String.valueOf(confirmPassword.getText()).trim();
 
+        String userName = String.valueOf(name.getText()).trim();
+        String userEmail = String.valueOf(email.getText()).trim();
+        String userPassword = String.valueOf(password.getText()).trim();
+        String userConfirm = String.valueOf(confirmPassword.getText()).trim();
 
-        if (userName.isEmpty()||userEmail.isEmpty()||userPassword.isEmpty()||userConfirm.isEmpty()){
-            Toast.makeText(this,"fill all fildes",Toast.LENGTH_SHORT).show();
+        if (userName.isEmpty() || userEmail.isEmpty() || userPassword.isEmpty() || userConfirm.isEmpty()){
+            Toast.makeText(this,"Fill all fields",Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (!userPassword.equals(userConfirm)){
             Toast.makeText(this,"Password not match",Toast.LENGTH_SHORT).show();
             return;
         }
-        if(userPassword.length()<6){
-            Toast.makeText(this,"This password is short",Toast.LENGTH_SHORT).show();
+
+        if(userPassword.length() < 6){
+            Toast.makeText(this,"Password is too short",Toast.LENGTH_SHORT).show();
             return;
         }
 
+        auth.createUserWithEmailAndPassword(userEmail,userPassword)
+                .addOnCompleteListener(task -> {
 
+                    if (task.isSuccessful()){
 
-        auth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(task->{
-         if (task.isSuccessfil()){
-             firebaseUser user = auth.getCurrentUser();
-             UserProfileChangeRequest.Builder().setDisplayName(UserName).build();
-             if (user != null) {
-                 user.updateProfile(profile);
-             }
-             Toast.makeText(this,"Account Created",Toast.LENGTH_SHORT).show();
+                        FirebaseUser user = auth.getCurrentUser();
 
-             satrtActivity(new Intent(RegisterActivity.this,MainActivity.class));
-             finish();
+                        if (user != null){
 
-         } else {
-           Toast.makeText(RegisterActivity.this,"Error: "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-         }
-        });
+                            UserProfileChangeRequest profile =
+                                    new UserProfileChangeRequest.Builder()
+                                            .setDisplayName(userName)
+                                            .build();
 
+                            user.updateProfile(profile);
+                        }
 
-    }
-}
+                        Toast.makeText(this,"Account Created",Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                        finish();
+
+                    } else {
+
+                        Toast.makeText(RegisterActivity.this,
+                                "Error: " + task.getException().getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                });
+    }}
